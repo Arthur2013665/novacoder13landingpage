@@ -10,7 +10,6 @@ import {
   Rocket,
   ArrowRight,
   Check,
-  Star,
   Globe,
   Cpu,
   Layers,
@@ -815,6 +814,98 @@ function AboutSection() {
   );
 }
 
+function DonationSection() {
+  const { ref, isVisible } = useScrollAnimation();
+
+  return (
+    <section className="relative py-32 bg-dark-900 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-mesh opacity-30" />
+      <GlowingOrb className="w-96 h-96 bg-aurora-cyan/10 top-1/2 right-0" />
+
+      <div ref={ref} className="relative z-10 max-w-4xl mx-auto px-6">
+        <div
+          className={`text-center mb-12 ${
+            isVisible ? 'animate-fade-in-up' : 'opacity-0'
+          }`}
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
+            <Heart className="w-4 h-4 text-aurora-pink" />
+            <span className="text-sm text-dark-200">Support Nova AI</span>
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">
+            Love what we're building?
+          </h2>
+          <p className="text-lg text-dark-300 max-w-2xl mx-auto">
+            Nova AI is free forever, but your support helps us keep improving and adding new features.
+          </p>
+        </div>
+
+        <div
+          className={`glass rounded-3xl p-8 md:p-12 ${
+            isVisible ? 'animate-scale-in' : 'opacity-0'
+          }`}
+          style={{ animationDelay: isVisible ? '200ms' : '0ms' }}
+        >
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            {/* Left side - Icon */}
+            <div className="flex-shrink-0">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-aurora-pink to-aurora-purple flex items-center justify-center animate-glow-pulse">
+                <Heart className="w-10 h-10 text-white fill-white" />
+              </div>
+            </div>
+
+            {/* Right side - Content */}
+            <div className="flex-1 text-center md:text-left">
+              <h3 className="font-display text-2xl font-bold text-white mb-3">
+                Buy us a coffee ☕
+              </h3>
+              <p className="text-dark-300 mb-6">
+                Every donation helps us maintain servers, improve AI models, and build new features for the community.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a
+                  href="https://www.buymeacoffee.com/novacoder13"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-nova flex items-center justify-center gap-2 group"
+                >
+                  <Heart className="w-5 h-5 group-hover:animate-bounce" />
+                  <span>Donate on Buy Me a Coffee</span>
+                </a>
+                <a
+                  href="https://github.com/sponsors/novacoder13"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border border-white/10 text-white hover:bg-white/5 transition-all duration-300"
+                >
+                  <span>GitHub Sponsors</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="mt-8 pt-8 border-t border-white/10 grid grid-cols-3 gap-4 text-center">
+            <div>
+              <div className="text-2xl font-display font-bold text-gradient mb-1">$0</div>
+              <div className="text-sm text-dark-400">Raised</div>
+            </div>
+            <div>
+              <div className="text-2xl font-display font-bold text-gradient mb-1">0</div>
+              <div className="text-sm text-dark-400">Supporters</div>
+            </div>
+            <div>
+              <div className="text-2xl font-display font-bold text-gradient mb-1">100%</div>
+              <div className="text-sm text-dark-400">Free Forever</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CTASection() {
   const { ref, isVisible } = useScrollAnimation();
 
@@ -875,15 +966,33 @@ function Footer() {
               The next generation AI coding assistant. Build faster, smarter, and more efficiently.
             </p>
             <div className="flex gap-4">
-              {[Globe, MessageSquare, Code2].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-10 h-10 rounded-xl glass flex items-center justify-center text-dark-400 hover:text-white hover:bg-white/10 transition-all"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
+              <a
+                href="https://novacoder13.lovable.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl glass flex items-center justify-center text-dark-400 hover:text-white hover:bg-white/10 transition-all"
+                title="Visit Nova AI"
+              >
+                <Globe className="w-5 h-5" />
+              </a>
+              <a
+                href="https://github.com/Arthur2013665/novacoder13landingpage"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl glass flex items-center justify-center text-dark-400 hover:text-white hover:bg-white/10 transition-all"
+                title="GitHub Repository"
+              >
+                <Code2 className="w-5 h-5" />
+              </a>
+              <a
+                href="https://novacoder13.lovable.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl glass flex items-center justify-center text-dark-400 hover:text-white hover:bg-white/10 transition-all"
+                title="Contact Support"
+              >
+                <MessageSquare className="w-5 h-5" />
+              </a>
             </div>
           </div>
 
@@ -928,7 +1037,7 @@ function Footer() {
             <Link to="/terms" className="text-dark-500 hover:text-dark-300 transition-colors text-sm">Terms</Link>
             <div className="flex items-center gap-2 text-dark-500 text-sm">
               <Clock className="w-4 h-4" />
-              <span>Built with Nova AI</span>
+              <span>Built with <span className="underline">Nova AI</span></span>
             </div>
           </div>
         </div>
@@ -950,6 +1059,7 @@ export default function HomePage() {
       <FeaturesSection />
       <DemoSection />
       <PricingSection />
+      <DonationSection />
       <CTASection />
       <Footer />
     </div>
