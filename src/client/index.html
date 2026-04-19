@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Nova AI - The next generation AI coding assistant" />
+    <title>Nova AI - AI Coding Assistant</title>
+    
+    <!-- Inline critical CSS for instant render -->
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { 
+        margin: 0; 
+        background: #020617; 
+        color: #f8fafc;
+        font-family: system-ui, -apple-system, sans-serif;
+        overflow-x: hidden;
+      }
+      #root { min-height: 100vh; }
+      
+      /* Loading screen - shows immediately */
+      #loading-screen {
+        position: fixed;
+        inset: 0;
+        background: #020617;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      #loading-screen.loaded {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .loader-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+        max-width: 400px;
+        width: 90%;
+      }
+      
+      /* Brand section */
+      .loader-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      .loader-icon {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .loader-circle {
+        animation: rotate 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        transform-origin: center;
+      }
+      
+      .loader-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      
+      /* Progress section */
+      .loader-progress {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .loader-bar {
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .loader-bar-fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #6366f1, #a855f7, #22d3ee);
+        background-size: 200% 100%;
+        border-radius: 2px;
+        animation: fillBar 2s ease-out forwards, shimmer 1.5s ease-in-out infinite;
+      }
+      
+      .loader-text {
+        font-size: 0.875rem;
+        color: #94a3b8;
+        text-align: center;
+        margin: 0;
+        font-weight: 500;
+      }
+      
+      /* Animations */
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+          stroke-dashoffset: 28;
+        }
+        50% {
+          transform: rotate(180deg);
+          stroke-dashoffset: 85;
+        }
+        100% {
+          transform: rotate(360deg);
+          stroke-dashoffset: 28;
+        }
+      }
+      
+      @keyframes fillBar {
+        0% { width: 0%; }
+        100% { width: 100%; }
+      }
+      
+      @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+    </style>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Defer font loading - only load what's needed -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  </head>
+  <body>
+    <!-- Loading screen - shows immediately -->
+    <div id="loading-screen">
+      <div class="loader-container">
+        <div class="loader-brand">
+          <div class="loader-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" stroke="url(#gradient)" stroke-width="3" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="28" class="loader-circle"/>
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h1 class="loader-title">Nova AI</h1>
+        </div>
+        
+        <div class="loader-progress">
+          <div class="loader-bar">
+            <div class="loader-bar-fill"></div>
+          </div>
+          <p class="loader-text">Loading experience...</p>
+        </div>
+      </div>
+    </div>
+    
+    <div id="root"></div>
+    
+    <script type="module" src="./index.tsx"></script>
+    
+    <!-- Hide loading screen when React loads -->
+    <script>
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const loader = document.getElementById('loading-screen');
+          if (loader) {
+            loader.classList.add('loaded');
+            setTimeout(() => loader.remove(), 500);
+          }
+        }, 100);
+      });
+    </script>
+  </body>
+</html>

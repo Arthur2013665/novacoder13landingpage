@@ -1,0 +1,153 @@
+/* Fonts loaded in HTML for better performance */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   NOVA AI - Optimized Design System
+   ======================================== */
+
+@layer base {
+  :root {
+    --nova-primary: 99 102 241;
+    --nova-secondary: 168 85 247;
+    --nova-accent: 34 211 238;
+    --bg-dark: 2 6 23;
+    --bg-surface: 15 23 42;
+    --text-primary: 248 250 252;
+    --text-secondary: 148 163 184;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: rgb(var(--bg-dark));
+    color: rgb(var(--text-primary));
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Glass morphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-hover:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(135deg, #818cf8 0%, #a855f7 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-shine {
+    background: linear-gradient(90deg, #818cf8, #a855f7, #22d3ee, #818cf8);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textShimmer 3s ease-in-out infinite;
+  }
+
+  /* Nova button */
+  .btn-nova {
+    @apply relative overflow-hidden px-8 py-4 rounded-2xl font-semibold text-white;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-nova::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-nova:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.5);
+  }
+
+  .btn-nova:hover::before {
+    opacity: 1;
+  }
+
+  .btn-nova span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Background mesh */
+  .bg-mesh {
+    background-image:
+      radial-gradient(at 40% 20%, hsla(240, 80%, 70%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(270, 80%, 60%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(200, 80%, 70%, 0.15) 0px, transparent 50%);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--bg-dark));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--nova-primary) / 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--nova-primary) / 0.5);
+  }
+
+  ::selection {
+    background: rgb(var(--nova-primary) / 0.3);
+    color: rgb(var(--text-primary));
+  }
+
+  /* Spinner animation */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+}
+
+@layer utilities {
+  .animate-on-scroll {
+    opacity: 0;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
