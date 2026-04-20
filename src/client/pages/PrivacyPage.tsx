@@ -31,7 +31,7 @@ export default function PrivacyPage() {
           <h1 className="font-display text-4xl md:text-5xl font-bold text-gradient mb-4">
             Privacy Policy
           </h1>
-          <p className="text-dark-400">Last updated: January 1, 2024</p>
+          <p className="text-dark-400">Last updated: January 1, 2026</p>
         </div>
 
         <div className="prose prose-invert max-w-none space-y-8">
@@ -212,7 +212,7 @@ export default function PrivacyPage() {
       {/* Footer */}
       <footer className="border-t border-white/5 py-8">
         <div className="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-dark-500 text-sm">© 2024 Nova AI. All rights reserved.</p>
+          <p className="text-dark-500 text-sm">© 2026 Nova AI. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link to="/privacy" className="text-nova-400 text-sm">Privacy</Link>
             <Link to="/terms" className="text-dark-400 hover:text-white transition-colors text-sm">Terms</Link>

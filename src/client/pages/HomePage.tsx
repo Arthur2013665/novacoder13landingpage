@@ -1037,7 +1037,7 @@ function Footer() {
             <Link to="/terms" className="text-dark-500 hover:text-dark-300 transition-colors text-sm">Terms</Link>
             <div className="flex items-center gap-2 text-dark-500 text-sm">
               <Clock className="w-4 h-4" />
-              <span>Built with <span className="underline">Nova AI</span></span>
+              <span>Built with <a href="https://novacoder13.lovable.app" target="_blank" rel="noopener noreferrer" className="underline hover:text-dark-300 transition-colors">Nova AI</a></span>
             </div>
           </div>
         </div>
