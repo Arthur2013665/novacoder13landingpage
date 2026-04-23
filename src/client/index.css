@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 /* ========================================
-   NOVA AI - Optimized Design System
+   NOVA AI — Premium Design System v2
    ======================================== */
 
 @layer base {
@@ -14,7 +14,7 @@
     --nova-secondary: 168 85 247;
     --nova-accent: 34 211 238;
     --bg-dark: 2 6 23;
-    --bg-surface: 15 23 42;
+    --bg-surface: 13 17 38;
     --text-primary: 248 250 252;
     --text-secondary: 148 163 184;
   }
@@ -28,30 +28,84 @@
     background-color: rgb(var(--bg-dark));
     color: rgb(var(--text-primary));
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', system-ui, sans-serif;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 @layer components {
-  /* Glass morphism */
+  /* ── Glassmorphism ── */
   .glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .glass-hover:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
   }
 
-  /* Gradient text */
+  /* ── Premium gradient-border card ── */
+  .card-premium {
+    position: relative;
+    background:
+      linear-gradient(135deg, rgba(13, 17, 38, 0.92), rgba(15, 23, 42, 0.85)) padding-box,
+      linear-gradient(135deg, rgba(99, 102, 241, 0.32), rgba(168, 85, 247, 0.18), rgba(34, 211, 238, 0.22)) border-box;
+    border: 1px solid transparent;
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    transition: background 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .card-premium:hover {
+    background:
+      linear-gradient(135deg, rgba(13, 17, 38, 0.97), rgba(15, 23, 42, 0.93)) padding-box,
+      linear-gradient(135deg, rgba(99, 102, 241, 0.65), rgba(168, 85, 247, 0.45), rgba(34, 211, 238, 0.52)) border-box;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 36px -12px rgba(99, 102, 241, 0.28);
+  }
+
+  /* Glowing horizontal accent at card top */
+  .card-glow-top {
+    overflow: hidden;
+  }
+  .card-glow-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(99, 102, 241, 0.7) 30%,
+      rgba(168, 85, 247, 0.7) 70%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Gradient text ── */
   .text-gradient {
-    background: linear-gradient(135deg, #818cf8 0%, #a855f7 50%, #22d3ee 100%);
+    background: linear-gradient(135deg, #818cf8 0%, #a855f7 55%, #22d3ee 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -59,95 +113,145 @@
 
   .text-gradient-shine {
     background: linear-gradient(90deg, #818cf8, #a855f7, #22d3ee, #818cf8);
-    background-size: 200% auto;
+    background-size: 250% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: textShimmer 3s ease-in-out infinite;
+    animation: textShimmer 4s ease-in-out infinite;
   }
 
-  /* Nova button */
+  /* ── Primary button ── */
   .btn-nova {
-    @apply relative overflow-hidden px-8 py-4 rounded-2xl font-semibold text-white;
+    @apply relative overflow-hidden px-8 py-4 rounded-2xl font-semibold text-white cursor-pointer select-none;
     background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
   }
-
   .btn-nova::before {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.25s ease;
   }
-
   .btn-nova:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 20px 40px -12px rgba(99, 102, 241, 0.65), 0 0 0 1px rgba(99, 102, 241, 0.25);
   }
+  .btn-nova:hover::before { opacity: 1; }
+  .btn-nova:active { transform: translateY(0); }
+  .btn-nova > * { position: relative; z-index: 1; }
 
-  .btn-nova:hover::before {
-    opacity: 1;
+  /* ── Ghost button ── */
+  .btn-ghost {
+    @apply relative px-8 py-4 rounded-2xl font-semibold text-white cursor-pointer select-none;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
-
-  .btn-nova span {
-    position: relative;
-    z-index: 1;
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
   }
+  .btn-ghost:active { transform: translateY(0); }
 
-  /* Background mesh */
+  /* ── Background mesh ── */
   .bg-mesh {
     background-image:
-      radial-gradient(at 40% 20%, hsla(240, 80%, 70%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, hsla(270, 80%, 60%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 0% 50%, hsla(200, 80%, 70%, 0.15) 0px, transparent 50%);
+      radial-gradient(at 30% 15%, hsla(240, 80%, 70%, 0.11) 0px, transparent 55%),
+      radial-gradient(at 80% 5%, hsla(270, 80%, 60%, 0.11) 0px, transparent 55%),
+      radial-gradient(at 5% 55%, hsla(200, 80%, 70%, 0.1) 0px, transparent 55%),
+      radial-gradient(at 55% 95%, hsla(250, 70%, 55%, 0.08) 0px, transparent 55%);
   }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
+  /* ── Card spotlight (mouse-following radial glow) ── */
+  .card-spotlight {
+    --spot-x: -9999px;
+    --spot-y: -9999px;
+  }
+  .card-spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      280px circle at var(--spot-x) var(--spot-y),
+      rgba(99, 102, 241, 0.11) 0%,
+      rgba(168, 85, 247, 0.05) 45%,
+      transparent 70%
+    );
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    opacity: 0;
+  }
+  .card-spotlight:hover::after { opacity: 1; }
+
+  /* ── Badge shimmer sweep ── */
+  .badge-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .badge-shimmer::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -80%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.18) 50%,
+      transparent 100%
+    );
+    transform: skewX(-15deg);
+    animation: badgeShimmer 3.5s ease-in-out infinite;
+    pointer-events: none;
+    border-radius: inherit;
   }
 
-  ::-webkit-scrollbar-track {
-    background: rgb(var(--bg-dark));
-  }
-
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: rgb(var(--bg-dark)); }
   ::-webkit-scrollbar-thumb {
-    background: rgb(var(--nova-primary) / 0.3);
-    border-radius: 4px;
+    background: linear-gradient(to bottom, rgba(99, 102, 241, 0.45), rgba(168, 85, 247, 0.45));
+    border-radius: 3px;
   }
-
   ::-webkit-scrollbar-thumb:hover {
-    background: rgb(var(--nova-primary) / 0.5);
+    background: linear-gradient(to bottom, rgba(99, 102, 241, 0.75), rgba(168, 85, 247, 0.75));
   }
 
   ::selection {
-    background: rgb(var(--nova-primary) / 0.3);
+    background: rgba(99, 102, 241, 0.35);
     color: rgb(var(--text-primary));
-  }
-
-  /* Spinner animation */
-  @keyframes spin {
-    to { transform: rotate(360deg); }
   }
 }
 
-@layer utilities {
-  .animate-on-scroll {
-    opacity: 0;
-  }
+@keyframes badgeShimmer {
+  0%     { left: -80%; opacity: 0; }
+  8%     { opacity: 1; }
+  45%, 100% { left: 160%; opacity: 0; }
+}
 
-  .animate-on-scroll.visible {
-    opacity: 1;
-  }
+/* textShimmer keyframe (used in .text-gradient-shine) */
+@keyframes textShimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@layer utilities {
+  .animate-on-scroll { opacity: 0; }
+  .animate-on-scroll.visible { opacity: 1; }
 
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+  /* Transition ease helpers */
+  .ease-apple { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+  .ease-spring { transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
 }
