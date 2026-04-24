@@ -5,7 +5,14 @@ import {
   Rocket, ArrowRight, Check, Globe, Layers, Clock,
   Users, ChevronRight, Play, Target, Heart, Lightbulb,
   Terminal,
+  Database, Server, GitBranch, Wand2, Monitor, Package,
+  RefreshCw, Upload, FileCode, Eye, Palette, Lock, Gauge,
+  Bug, Pencil, Download,
 } from 'lucide-react';
+import { CodeEditor } from '../components/CodeEditor';
+import { ImageGenerator } from '../components/ImageGenerator';
+import { DeploymentPanel } from '../components/DeploymentPanel';
+import { CookieConsent } from '../components/CookieConsent';
 
 // ============================================
 // HOOKS
@@ -384,7 +391,15 @@ function Navbar() {
 // HERO
 // ============================================
 
-function HeroSection() {
+function HeroSection({ 
+  onOpenCodeEditor, 
+  onOpenImageGen, 
+  onOpenDeployment 
+}: { 
+  onOpenCodeEditor: () => void;
+  onOpenImageGen: () => void;
+  onOpenDeployment: () => void;
+}) {
   const mousePos = useMouseParallax();
   const magneticCTA = useMagneticEffect(0.22);
 
@@ -464,7 +479,7 @@ function HeroSection() {
 
         {/* CTAs */}
         <div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up opacity-0"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up opacity-0 mb-8"
           style={{ animationDelay: '1100ms', animationFillMode: 'forwards' }}
         >
           <div ref={magneticCTA.ref} onMouseMove={magneticCTA.onMouseMove} onMouseLeave={magneticCTA.onMouseLeave} className="inline-block">
@@ -489,10 +504,38 @@ function HeroSection() {
           </a>
         </div>
 
+        {/* Premium Feature Buttons */}
+        <div
+          className="flex flex-wrap items-center justify-center gap-3 mb-12 animate-fade-in-up opacity-0"
+          style={{ animationDelay: '1250ms', animationFillMode: 'forwards' }}
+        >
+          <button
+            onClick={onOpenCodeEditor}
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-nova-500/10 to-aurora-purple/10 border border-nova-500/30 hover:border-nova-500/60 text-white text-sm font-medium transition-all hover:scale-105 flex items-center gap-2 group"
+          >
+            <Code2 className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+            <span>Open Code Editor</span>
+          </button>
+          <button
+            onClick={onOpenImageGen}
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-aurora-pink/10 to-aurora-purple/10 border border-aurora-pink/30 hover:border-aurora-pink/60 text-white text-sm font-medium transition-all hover:scale-105 flex items-center gap-2 group"
+          >
+            <Wand2 className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+            <span>Generate Image</span>
+          </button>
+          <button
+            onClick={onOpenDeployment}
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-aurora-cyan/10 to-aurora-teal/10 border border-aurora-cyan/30 hover:border-aurora-cyan/60 text-white text-sm font-medium transition-all hover:scale-105 flex items-center gap-2 group"
+          >
+            <Rocket className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+            <span>Deploy Project</span>
+          </button>
+        </div>
+
         {/* Trust strip */}
         <div
           className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm text-dark-600 animate-fade-in-up opacity-0"
-          style={{ animationDelay: '1300ms', animationFillMode: 'forwards' }}
+          style={{ animationDelay: '1400ms', animationFillMode: 'forwards' }}
         >
           {[
             { icon: Check, text: 'Free forever' },
@@ -717,6 +760,230 @@ function FeatureCard({
         <ArrowRight className="w-4 h-4 text-nova-400" />
       </div>
     </div>
+  );
+}
+
+// ============================================
+// 60 FEATURES — Tabbed Showcase
+// ============================================
+
+type FeatureItem = { icon: React.ElementType; title: string; desc: string };
+
+const FEATURE_TABS: {
+  id: string;
+  label: string;
+  icon: React.ElementType;
+  accent: string;
+  glowColor: string;
+  features: FeatureItem[];
+}[] = [
+  {
+    id: 'ai',
+    label: 'AI Intelligence',
+    icon: Brain,
+    accent: 'from-nova-500 to-aurora-purple',
+    glowColor: 'rgba(99,102,241,0.13)',
+    features: [
+      { icon: Brain, title: 'Multi-Model AI', desc: 'Switch between GPT-4, Claude, Gemini and Mistral mid-conversation.' },
+      { icon: Zap, title: 'Streaming Responses', desc: 'Watch AI output appear token-by-token in real time.' },
+      { icon: Layers, title: 'Context Memory', desc: 'Maintains full conversation history with intelligent compression.' },
+      { icon: Lightbulb, title: 'Smart Suggestions', desc: 'Follow-up prompts generated automatically from your last reply.' },
+      { icon: Shield, title: 'Custom Instructions', desc: 'Persistent system prompts settable per-project or globally.' },
+      { icon: MessageSquare, title: 'Voice Input', desc: 'Speak your prompts using built-in speech recognition.' },
+      { icon: Eye, title: 'Deep Code Awareness', desc: 'AI reads entire files and codebases, not just snippets.' },
+      { icon: Gauge, title: 'Response Modifiers', desc: 'Adjust tone, verbosity, and format with a single click.' },
+      { icon: RefreshCw, title: 'Regenerate & Edit', desc: 'Re-run or edit any past prompt to branch your history.' },
+      { icon: Download, title: 'Export Chats', desc: 'Download conversations as Markdown, PDF, or JSON.' },
+      { icon: Lock, title: 'Private & Secure', desc: 'Your data is never used for AI model training.' },
+      { icon: Users, title: 'Team Access', desc: 'Invite collaborators and share workspaces with your team.' },
+    ],
+  },
+  {
+    id: 'code',
+    label: 'Code & Dev',
+    icon: Code2,
+    accent: 'from-aurora-cyan to-aurora-teal',
+    glowColor: 'rgba(34,211,238,0.10)',
+    features: [
+      { icon: Code2, title: 'Monaco-Grade Editor', desc: 'VS Code-quality editing with IntelliSense and syntax awareness.' },
+      { icon: Monitor, title: 'Multi-File Workspace', desc: 'Open, edit, and switch between multiple files simultaneously.' },
+      { icon: FileCode, title: '200+ Languages', desc: 'Accurate syntax highlighting for every major programming language.' },
+      { icon: Eye, title: 'Live Diff View', desc: 'See AI-suggested changes highlighted before you accept them.' },
+      { icon: Pencil, title: 'In-Chat Code Edit', desc: 'Edit any AI-generated code block directly in the response.' },
+      { icon: GitBranch, title: 'Git Integration', desc: 'View diffs and file status alongside your editor.' },
+      { icon: Layers, title: 'Split-Panel View', desc: 'Chat on the left, editor and live preview on the right.' },
+      { icon: Bug, title: 'Inline Error Hints', desc: 'Compile errors annotated directly on the offending line.' },
+      { icon: Terminal, title: 'Keyboard Shortcuts', desc: 'Full shortcut system: Ctrl+N, Ctrl+/, Ctrl+Shift+F and more.' },
+      { icon: Package, title: 'Code Snippets', desc: 'Insert common patterns from a searchable snippet library.' },
+      { icon: Download, title: 'Export Project', desc: 'Download your entire workspace as a ZIP at any time.' },
+      { icon: Upload, title: 'File Upload', desc: 'Drag and drop any file into the chat for instant AI analysis.' },
+    ],
+  },
+  {
+    id: 'creative',
+    label: 'Creative Studio',
+    icon: Palette,
+    accent: 'from-aurora-pink to-aurora-purple',
+    glowColor: 'rgba(236,72,153,0.10)',
+    features: [
+      { icon: Wand2, title: 'Text-to-Image', desc: 'Generate stunning images from a plain-English description.' },
+      { icon: Sparkles, title: 'Nano Banana Pro', desc: 'Ultra-fast image generation powered by the NBP API.' },
+      { icon: GitBranch, title: 'Code-to-Diagram', desc: 'Convert code structure and function calls to visual flowcharts.' },
+      { icon: Monitor, title: 'UI Mockup Gen', desc: 'Generate app wireframes and mockups from a description.' },
+      { icon: Pencil, title: 'AI Image Editing', desc: 'Modify existing images with plain-English instructions.' },
+      { icon: Palette, title: 'Style Transfer', desc: 'Apply any artistic style to photos or design assets.' },
+      { icon: Wand2, title: 'Icon Generator', desc: 'Create custom SVG icons in any style, on demand.' },
+      { icon: Eye, title: 'Screenshot Analysis', desc: 'Upload a screenshot and ask the AI questions about it.' },
+      { icon: Layers, title: 'Architecture Diagrams', desc: 'Auto-generate system architecture and database diagrams.' },
+      { icon: RefreshCw, title: 'Batch Generation', desc: 'Generate multiple image variations in a single request.' },
+      { icon: Gauge, title: 'AI Upscaling', desc: 'Upscale images to 4× resolution with AI detail preservation.' },
+      { icon: Shield, title: 'Background Removal', desc: 'Instant AI background removal from any uploaded image.' },
+    ],
+  },
+  {
+    id: 'productivity',
+    label: 'Productivity',
+    icon: Zap,
+    accent: 'from-aurora-teal to-nova-500',
+    glowColor: 'rgba(20,184,166,0.10)',
+    features: [
+      { icon: Clock, title: 'Conversation History', desc: 'Persistent, searchable, exportable chat history forever.' },
+      { icon: Layers, title: 'Smart Folders', desc: 'Organize conversations by project automatically.' },
+      { icon: FileCode, title: 'Prompt Templates', desc: 'Save and reuse your most effective prompts instantly.' },
+      { icon: Zap, title: 'Quick Commands', desc: 'Slash-command shortcuts for your most frequent actions.' },
+      { icon: Package, title: 'Bulk Actions', desc: 'Select and delete or export multiple chats at once.' },
+      { icon: Monitor, title: 'Focus Mode', desc: 'Distraction-free full-screen chat interface.' },
+      { icon: Eye, title: 'Dark / Light Theme', desc: 'System-aware theme with a manual override toggle.' },
+      { icon: Gauge, title: 'Compact Mode', desc: 'Dense layout for power users who want more on screen.' },
+      { icon: RefreshCw, title: 'Auto Scroll', desc: 'Automatically follow new AI output as it streams in.' },
+      { icon: Heart, title: 'Bookmarks', desc: 'Pin important messages for quick reference later.' },
+      { icon: Users, title: 'Admin Panel', desc: 'Full user management, audit logs, and moderation tools.' },
+      { icon: MessageSquare, title: 'Announcements', desc: 'Push updates and news directly to all users.' },
+    ],
+  },
+  {
+    id: 'deploy',
+    label: 'Deploy & Ship',
+    icon: Rocket,
+    accent: 'from-aurora-blue to-nova-500',
+    glowColor: 'rgba(59,130,246,0.10)',
+    features: [
+      { icon: Rocket, title: 'One-Click Deploy', desc: 'Ship to Vercel, Netlify, or Cloudflare Pages instantly.' },
+      { icon: Monitor, title: 'Live Web Preview', desc: 'See your app running at a live URL as you build it.' },
+      { icon: Globe, title: 'Custom Domains', desc: 'Connect your own domain in under two minutes.' },
+      { icon: Lock, title: 'Auto HTTPS', desc: 'SSL certificates provisioned automatically for every deploy.' },
+      { icon: GitBranch, title: 'CI/CD Pipeline', desc: 'Automated build and deploy triggered on every push.' },
+      { icon: Server, title: 'Edge Functions', desc: 'Deploy serverless functions globally at the edge.' },
+      { icon: Zap, title: 'Static CDN Hosting', desc: 'Blazing-fast global CDN delivery for all static assets.' },
+      { icon: Database, title: 'Database Provisioning', desc: 'Supabase or PlanetScale DB provisioned in one click.' },
+      { icon: Package, title: 'Docker Support', desc: 'Build and push Docker images directly from the editor.' },
+      { icon: RefreshCw, title: 'One-Click Rollback', desc: 'Instantly revert to any previous deployment version.' },
+      { icon: Gauge, title: 'Real-Time Analytics', desc: 'Live traffic, error rates, and performance monitoring.' },
+      { icon: Shield, title: 'Environment Secrets', desc: 'Manage prod and staging environment variables securely.' },
+    ],
+  },
+];
+
+function FeaturesTabSection() {
+  const [activeTab, setActiveTab] = useState(0);
+  const [gridKey, setGridKey] = useState(0);
+  const { ref, isVisible } = useScrollAnimation();
+
+  const switchTab = (i: number) => {
+    if (i === activeTab) return;
+    setActiveTab(i);
+    setGridKey(k => k + 1);
+  };
+
+  const tab = FEATURE_TABS[activeTab];
+
+  return (
+    <section className="relative py-32 bg-dark-900 overflow-hidden">
+      <div className="absolute inset-0 bg-mesh opacity-30" aria-hidden />
+      <GlowingOrb
+        className="w-[700px] h-[700px] top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{ background: tab.glowColor, filter: 'blur(90px)', animation: 'none', transition: 'background 0.5s ease' }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <SectionHeader
+          badge="60+ Features"
+          title="Built for real developers"
+          subtitle="From AI intelligence to one-click deployment — every capability you need, polished to perfection."
+        />
+
+        {/* Tab bar */}
+        <div
+          ref={ref}
+          role="tablist"
+          aria-label="Feature categories"
+          className={`mt-12 flex flex-wrap justify-center gap-2.5 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+        >
+          {FEATURE_TABS.map((t, i) => {
+            const Icon = t.icon;
+            const active = i === activeTab;
+            return (
+              <button
+                key={t.id}
+                role="tab"
+                aria-selected={active}
+                onClick={() => switchTab(i)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-medium transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-nova-400 ${
+                  active
+                    ? `bg-gradient-to-r ${t.accent} text-white shadow-nova scale-[1.03]`
+                    : 'glass text-dark-400 hover:text-white hover:bg-white/8'
+                }`}
+              >
+                <Icon className="w-4 h-4 flex-shrink-0" aria-hidden />
+                <span>{t.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Feature grid — key change re-triggers the stagger animation */}
+        <div
+          key={gridKey}
+          role="tabpanel"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-10"
+        >
+          {tab.features.map((feature, i) => {
+            const Icon = feature.icon;
+            return (
+              <div
+                key={`${tab.id}-${i}`}
+                {...spotlightHandlers(4)}
+                className="card-premium card-glow-top card-spotlight rounded-2xl p-5 group cursor-default hover:shadow-card-hover overflow-hidden animate-fade-in-up opacity-0"
+                style={{ animationDelay: `${i * 35}ms`, animationFillMode: 'forwards' }}
+              >
+                <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${tab.accent} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-nova flex-shrink-0`}>
+                  <Icon className="w-4 h-4 text-white" strokeWidth={1.75} aria-hidden />
+                </div>
+                <h4 className="font-display text-sm font-semibold text-white mb-1.5 tracking-tight leading-snug group-hover:text-gradient transition-all duration-300">
+                  {feature.title}
+                </h4>
+                <p className="text-dark-600 text-xs leading-relaxed">{feature.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Count badge */}
+        <div
+          className={`flex justify-center mt-10 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+          style={{ animationDelay: '500ms' }}
+        >
+          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass cursor-default">
+            <Sparkles className="w-3.5 h-3.5 text-nova-400" aria-hidden />
+            <span className="text-sm text-dark-400">
+              Showing <span className="text-white font-semibold">{tab.features.length}</span> of{' '}
+              <span className="text-white font-semibold">60+</span> features across{' '}
+              <span className="text-white font-semibold">5</span> categories
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -1250,19 +1517,34 @@ function Footer() {
 // ============================================
 
 export default function HomePage() {
+  const [showCodeEditor, setShowCodeEditor] = useState(false);
+  const [showImageGen, setShowImageGen] = useState(false);
+  const [showDeployment, setShowDeployment] = useState(false);
+
   return (
     <div className="min-h-screen bg-dark-950 text-white overflow-x-hidden">
       <CursorGlow />
       <Navbar />
-      <HeroSection />
+      <HeroSection 
+        onOpenCodeEditor={() => setShowCodeEditor(true)}
+        onOpenImageGen={() => setShowImageGen(true)}
+        onOpenDeployment={() => setShowDeployment(true)}
+      />
       <StatsSection />
       <AboutSection />
       <FeaturesSection />
+      <FeaturesTabSection />
       <DemoSection />
       <PricingSection />
       <DonationSection />
       <CTASection />
       <Footer />
+      
+      {/* Premium Features */}
+      {showCodeEditor && <CodeEditor onClose={() => setShowCodeEditor(false)} />}
+      {showImageGen && <ImageGenerator onClose={() => setShowImageGen(false)} />}
+      {showDeployment && <DeploymentPanel onClose={() => setShowDeployment(false)} />}
+      <CookieConsent />
     </div>
   );
 }

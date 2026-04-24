@@ -1,0 +1,44 @@
+{
+  "name": "nova-ai-assistant",
+  "displayName": "Nova AI - Coding Assistant",
+  "description": "Elite AI coding assistant powered by Nova AI. Get code generation, debugging, architecture design, and 30+ coding capabilities right in your IDE.",
+  "version": "1.0.0",
+  "publisher": "nova-ai",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Programming Languages", "Snippets", "Other"],
+  "activationEvents": ["onCommand:nova.openChat"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "nova.openChat", "title": "Nova AI: Open Chat" },
+      { "command": "nova.explainCode", "title": "Nova AI: Explain Selected Code" },
+      { "command": "nova.fixCode", "title": "Nova AI: Fix Selected Code" },
+      { "command": "nova.generateTests", "title": "Nova AI: Generate Tests" }
+    ],
+    "keybindings": [
+      { "command": "nova.openChat", "key": "ctrl+shift+n", "mac": "cmd+shift+n" }
+    ],
+    "menus": {
+      "editor/context": [
+        { "command": "nova.explainCode", "when": "editorHasSelection", "group": "nova" },
+        { "command": "nova.fixCode", "when": "editorHasSelection", "group": "nova" },
+        { "command": "nova.generateTests", "when": "editorHasSelection", "group": "nova" }
+      ]
+    },
+    "configuration": {
+      "title": "Nova AI",
+      "properties": {
+        "nova.apiUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Nova AI API URL (your deployed app URL + /functions/v1/chat)"
+        },
+        "nova.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Nova AI API Key (your Supabase anon key)"
+        }
+      }
+    }
+  }
+}
